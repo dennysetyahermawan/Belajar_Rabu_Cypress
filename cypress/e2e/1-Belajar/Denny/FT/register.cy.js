@@ -27,10 +27,10 @@ describe("Test suite Create Account", () => {
   });
 
   describe("POSITIVE", () => {
-    it("valid user name & password", () => {
+    it.only("valid user name & password", () => {
       dataRegister.firstNameInput(user.validUser.firstName);
       dataRegister.lastNameInput(user.validUser.lastName);
-      dataRegister.emailInput(`${randomEmail}@gmail.com`);
+      dataRegister.emailInput(user.validUser.email);
       dataRegister.passwordInput(user.validUser.password);
       dataRegister.confirmPasswordInput(
         user.validUser["password-confirmation"]
@@ -55,7 +55,7 @@ describe("Test suite Create Account", () => {
   });
 
   describe("NEGATIVE", () => {
-    it.only("Empty username, email & password", () => {
+    it("Empty username, email & password", () => {
       dataRegister.getSubmit();
       cy.get(account.firstnameError).should("contain", message.registerError1);
       cy.get(account.lastnameError).should("contain", message.registerError1);
@@ -95,7 +95,7 @@ describe("Test suite Create Account", () => {
       invalidEmail.forEach((mail) => {
         dataRegister.firstNameInput(user.validUser.firstName);
         dataRegister.lastNameInput(user.validUser.lastName);
-        dataRegister.emailInput(mail);
+        dataRegister.emailInput(`${randomEmail}${mail}`);
         dataRegister.passwordInput(user.validUser.password);
         dataRegister.confirmPasswordInput(
           user.validUser["password-confirmation"]
@@ -197,7 +197,7 @@ describe("Test suite Create Account", () => {
       cy.get("#form-validate > .account").should("contain", message.password2);
     });
 
-    it.only("Create an account with the registered email", () => {
+    it("Create an account with the registered email", () => {
       dataRegister.firstNameInput(user.validUser.firstName);
       dataRegister.lastNameInput(user.validUser.lastName);
       dataRegister.emailInput(user.validUser.email);
@@ -207,6 +207,31 @@ describe("Test suite Create Account", () => {
       );
       dataRegister.getSubmit();
       cy.get(account.Errormsg).should("contain", message.registerError2);
+    });
+
+    it("Create account with only 1 character in the first & last name", () => {
+      dataRegister.firstNameInput(user.invalidUser8.firstName);
+      dataRegister.lastNameInput(user.invalidUser8.lastName);
+      dataRegister.emailInput(`${randomEmail}@gmail.com`);
+      dataRegister.passwordInput(user.invalidUser8.password);
+      dataRegister.confirmPasswordInput(
+        user.invalidUser8["password-confirmation"]
+      );
+      // dataRegister.getSubmit();
+      cy.get(".field-name-firstname").should(($first) => {
+        expect($first).to.have.text("Minimun 2 letters");
+      });
+    });
+
+    it("Create account with only number in the first name", () => {
+      dataRegister.firstNameInput(user.invalidUser9.firstName);
+      dataRegister.lastNameInput(user.invalidUser9.lastName);
+      dataRegister.emailInput(`${randomEmail}@gmail.com`);
+      dataRegister.passwordInput(user.invalidUser9.password);
+      dataRegister.confirmPasswordInput(
+        user.invalidUser9["password-confirmation"]
+      );
+      // dataRegister.getSubmit();
     });
   });
 });

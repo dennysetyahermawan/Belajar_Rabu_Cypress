@@ -7,11 +7,11 @@ const {
   pages,
 } = require("../../../../support/PageObject_byFunction/navigation");
 const {
-  register,
-} = require("../../../../support/PageObject_byFunction/registerPage");
+  login,
+} = require("../../../../support/PageObject_byFunction/loginPage");
 
 const getPages = pages();
-const login = register();
+const dataLogin = login();
 
 describe("Test suite login", () => {
   beforeEach("test", () => {
@@ -22,13 +22,7 @@ describe("Test suite login", () => {
 
   describe("POSITIVE", () => {
     it.only("Login with the valid email & password", () => {
-      login.loginUser(user.validUser.email, user.validUser.password);
-      // cy.get(account.userLogin)
-      //   .should(
-      //     "contain",
-      //     `${user.validUser.firstName} ${user.validUser.lastName}!`
-      //   )
-      //   .and("be.visible");
+      dataLogin.userLogin(user.validUser.email, user.validUser.password);
     });
   });
 

@@ -40,8 +40,7 @@ module.exports = defineConfig({
         // "cypress/e2e/1-Belajar/karis/FT/Login.cy.js",
         // "cypress/e2e/1-Belajar/karis/Non_FT/API.cy.js",
         "cypress/e2e/1-Belajar/Denny/FT/register.cy.js",
-        // "cypress/e2e/1-Belajar/Denny/FT/login.cy.js",
-
+        "cypress/e2e/1-Belajar/Denny/FT/login.cy.js",
         // "cypress/e2e/1-Belajar/Denny/Non FT/API.cy.js",
       ];
       return config;
