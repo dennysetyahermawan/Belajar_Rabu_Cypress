@@ -51,5 +51,7 @@
   "lastnameError": "#lastname-error",
   "emailError": "#email_address-error",
   "passwordError": "#password-error",
-  "confirmPasswordError": "#password-confirmation-error"
+  "confirmPasswordError": "#password-confirmation-error",
+  "loginEmailError": "#email-error",
+  "loginPasswordError": "#pass-error"
 }

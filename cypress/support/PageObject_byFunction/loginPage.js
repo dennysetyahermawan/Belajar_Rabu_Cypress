@@ -1,24 +1,41 @@
 export const login = () => {
-  //   const emailLogin = (email) => {
-  //     cy.get("#email").type(email);
-  //   };
-
-  //   const passwordLogin = (password) => {
-  //     cy.get("#pass").type(password);
-  //   };
-
-  const userLogin = (email, password) => {
-    if (!email && !password) {
+  const emailLogin = (email) => {
+    if (!email) {
       cy.get("#email").invoke("val", email);
-      cy.get("#pass").invoke("val", password);
-      cy.get("#send2").click();
+    } else {
+      cy.get("#email").type(email);
     }
-    cy.get("#email").type(email);
-    cy.get(
-      ".login-container > .block-customer-login > .block-content > #login-form > .fieldset > .password > .control > #pass"
-    ).type(password);
+  };
+
+  const passwordLogin = (password) => {
+    if (!password) {
+      cy.get("#pass").invoke("val", password);
+    } else {
+      cy.get("#pass").type(password);
+    }
+  };
+
+  const buttonLogin = () => {
     cy.get("#send2").click();
   };
 
-  return { userLogin };
+  const checkError = (selector, messageError) => {
+    cy.get(selector).should((msg) => {
+      const actualError = msg.text();
+      let messageFound = false;
+
+      messageError.forEach((err) => {
+        if (actualError.includes(err)) {
+          expect(actualError).to.contain(err);
+          messageFound = true;
+        }
+      });
+
+      if (!messageFound) {
+        throw new Error("Unexpected error message: " + actualError);
+      }
+    });
+  };
+
+  return { emailLogin, passwordLogin, buttonLogin, checkError };
 };

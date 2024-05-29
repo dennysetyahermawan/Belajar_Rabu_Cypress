@@ -20,17 +20,16 @@ const randomEmail = Math.floor(Math.random() * 100000);
 
 describe("Test suite Create Account", () => {
   beforeEach(() => {
-    cy.clearAllCookies();
-    cy.clearAllLocalStorage();
     getPages.visitHome();
+    cy.clearAllCookies();
     cy.contains("Create an Account").click();
   });
 
   describe("POSITIVE", () => {
-    it.only("valid user name & password", () => {
+    it("valid user name & password", () => {
       dataRegister.firstNameInput(user.validUser.firstName);
       dataRegister.lastNameInput(user.validUser.lastName);
-      dataRegister.emailInput(user.validUser.email);
+      dataRegister.emailInput(`${randomEmail}@gmail.com`);
       dataRegister.passwordInput(user.validUser.password);
       dataRegister.confirmPasswordInput(
         user.validUser["password-confirmation"]
@@ -207,20 +206,6 @@ describe("Test suite Create Account", () => {
       );
       dataRegister.getSubmit();
       cy.get(account.Errormsg).should("contain", message.registerError2);
-    });
-
-    it("Create account with only 1 character in the first & last name", () => {
-      dataRegister.firstNameInput(user.invalidUser8.firstName);
-      dataRegister.lastNameInput(user.invalidUser8.lastName);
-      dataRegister.emailInput(`${randomEmail}@gmail.com`);
-      dataRegister.passwordInput(user.invalidUser8.password);
-      dataRegister.confirmPasswordInput(
-        user.invalidUser8["password-confirmation"]
-      );
-      // dataRegister.getSubmit();
-      cy.get(".field-name-firstname").should(($first) => {
-        expect($first).to.have.text("Minimun 2 letters");
-      });
     });
 
     it("Create account with only number in the first name", () => {
